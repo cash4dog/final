@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: {{ .Values.appNamespace }}
+  labels:
+    app: test-backend-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-backend-server
+  template:
+    metadata:
+      labels:
+        app: test-backend-server
+    spec:
+      containers:
+      - name: backend-server
+        image: yevhenskr/final:latest 
+        ports:
+        - containerPort: 9900
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-backend-service
+  namespace: {{ .Values.appNamespace }}
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 9900
+    protocol: TCP
+  selector:
+    app: test-backend-server
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-backend-ingress
+  namespace: {{ .Values.appNamespace }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{ .Values.sslCertArn }}"
+    external-dns.alpha.kubernetes.io/hostname: "app.{{ .Values.clusterName }}.{{ .Values.zoneName }}"
+spec:
+  rules:
+  - host: "app.{{ .Values.clusterName }}.{{ .Values.zoneName }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-backend-service
+            port:
+              number: 8000
