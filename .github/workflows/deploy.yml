@@ -22,4 +22,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/final:latest
+        # Ми завантажуємо два теги: один унікальний (SHA), другий — свіжий latest
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/final:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/final:latest

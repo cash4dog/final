@@ -14,10 +14,14 @@ spec:
     metadata:
       labels:
         app: test-backend-server
+      annotations:
+        # ArgoCD автоматично підставить сюди унікальний SHA-хеш під час деплою
+        git-commit-sha: "{{ .Values.gitCommitSha }}"
     spec:
       containers:
       - name: backend-server
-        image: yevhenskr/final:latest 
+        image: yevhenskr/final
+        imagePullPolicy: Always
         ports:
         - containerPort: 9900
         resources:
