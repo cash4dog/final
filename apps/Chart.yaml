@@ -1,0 +1,6 @@
+apiVersion: v2
+name: root-apps-chart
+version: 1.0.0
+description: Helm chart to deploy ArgoCD Applications
+type: application
+appVersion: "1.0"
