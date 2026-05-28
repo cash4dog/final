@@ -12,6 +12,9 @@ spec:
   selector:
     matchLabels:
       app: test-backend-server
+  syncpolicy:
+    syncOptions:
+      - CreateNamespace=true
   template:
     metadata:
       labels:

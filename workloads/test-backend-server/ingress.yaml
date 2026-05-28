@@ -21,3 +21,6 @@ spec:
             name: app-backend-service
             port:
               number: 8000
+  syncpolicy:
+    syncOptions:
+      - CreateNamespace=true

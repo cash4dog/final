@@ -13,3 +13,6 @@ spec:
     protocol: TCP
   selector:
     app: test-backend-server
+  syncpolicy:
+    syncOptions:
+      - CreateNamespace=true
