@@ -11,7 +11,7 @@ spec:
       path: workloads/test-backend-server
   destination:
       server: "https://kubernetes.default.svc"
-      namespace: argocd
+      namespace: app-b-server
   syncPolicy:
       automated:
         prune: true

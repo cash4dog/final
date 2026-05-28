@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-backend-ingress
-  namespace: app-b-server
+  namespace: {{ .Values.appNamespace }}
   labels:
     app: test-backend-server
   annotations:
@@ -21,6 +21,3 @@ spec:
             name: app-backend-service
             port:
               number: 8000
-  syncpolicy:
-    syncOptions:
-      - CreateNamespace=true

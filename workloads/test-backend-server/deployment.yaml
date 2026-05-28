@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment
-  namespace: app-b-server
+  namespace: {{ .Values.appNamespace }}
   labels:
     app: test-backend-server
 spec:
@@ -12,9 +12,6 @@ spec:
   selector:
     matchLabels:
       app: test-backend-server
-  syncpolicy:
-    syncOptions:
-      - CreateNamespace=true
   template:
     metadata:
       labels:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-backend-service
-  namespace: app-b-server
+  namespace: {{ .Values.appNamespace }}
   labels:
     app: test-backend-server
 spec:
@@ -13,6 +13,3 @@ spec:
     protocol: TCP
   selector:
     app: test-backend-server
-  syncpolicy:
-    syncOptions:
-      - CreateNamespace=true
