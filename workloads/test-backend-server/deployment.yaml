@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: app-b-server
+  labels:
+    app: test-backend-server
+spec:
+  replicas: 2
+  # ЗБЕРІГАТИ ТІЛЬКИ 2 ПОПЕРЕДНІ ВЕРСІЇ ДЛЯ ВІДКОТУ (замість 10):
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: test-backend-server
+  template:
+    metadata:
+      labels:
+        app: test-backend-server
+      annotations:
+        # ArgoCD автоматично підставить сюди унікальний SHA-хеш під час деплою
+        git-commit-sha: "{{ .Values.gitCommitSha }}"
+    spec:
+      containers:
+      - name: backend-server
+        image: yevhenskr/final
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9900
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+      # ДОДАТКОВО: Налаштування для автоматичного перезапуску при збоях
+      restartPolicy: Always

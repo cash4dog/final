@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-backend-service
+  namespace: app-b-server
+  labels:
+    app: test-backend-server
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 9900
+    protocol: TCP
+  selector:
+    app: test-backend-server
