@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment
-  namespace: {{ .Values.appNamespace }}
   labels:
     app: test-backend-server
 spec:
@@ -17,8 +16,9 @@ spec:
       labels:
         app: test-backend-server
       annotations:
-        # ArgoCD автоматично підставить сюди унікальний SHA-хеш під час деплою
-        git-commit-sha: "{{ .Values.gitCommitSha }}"
+        # При кожному новому коміті ArgoCD оновить цей анотейшн, 
+        # що змусить Kubernetes автоматично перезапустити поди (Rolling Update)
+        git-commit-sha: "${ARGOCD_APP_REVISION}"
     spec:
       containers:
       - name: backend-server

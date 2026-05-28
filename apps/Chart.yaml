@@ -1,4 +1,0 @@
-apiVersion: v2
-name: test-app-chart-technical
-version: 1.0.0
-description: A Helm chart for Kubernetes, used in Argo CD (technical)

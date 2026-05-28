@@ -1,0 +1,6 @@
+apiVersion: v2
+name: test-backend-server
+version: 1.0.0
+description: A Helm chart for test backend server
+type: application
+appVersion: "1.0"

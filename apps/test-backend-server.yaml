@@ -7,8 +7,16 @@ spec:
   project: default
   source:
       repoURL: "https://github.com/cash4dog/final"
-      targetRevision: main
+      targetRevision: HEAD
       path: workloads/test-backend-server
+      helm:
+        parameters:
+         - name: "gitCommitSha"
+           value: "$ARGOCD_APP_REVISION"
+        values: |
+          sslCertArn: "{{ .Values.sslCertArn }}"
+          clusterName: "{{ .Values.clusterName }}"
+          zoneName: "{{ .Values.zoneName }}"
   destination:
       server: "https://kubernetes.default.svc"
       namespace: app-b-server
@@ -18,8 +26,3 @@ spec:
         selfHeal: true
       syncOptions:
         - CreateNamespace=true
-  template:
-    metadata:
-      annotations:
-        # ArgoCD автоматично підставить сюди унікальний SHA-хеш під час деплою
-        git-commit-sha: "{{ .Values.gitCommitSha }}"
