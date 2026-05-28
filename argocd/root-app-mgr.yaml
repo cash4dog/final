@@ -9,21 +9,8 @@ spec:
       repoURL: "https://github.com/cash4dog/final"
       targetRevision: HEAD
       path: apps
-      helm:
-        parameters:
-          - name: clusterName
-            value: "{{ .Values.clusterName }}"
-          - name: zoneName
-            value: "{{ .Values.zoneName }}"
-          - name: appNamespace
-            value: "{{ .Values.appNamespace }}"
-          - name: sslCertArn
-            value: "{{ .Values.sslCertArn }}"
-          - name: gitCommitSha
-            value: "$ARGOCD_APP_REVISION"
   destination:
       server: "https://kubernetes.default.svc"
-      namespace: "{{ .Values.appNamespace }}"
   syncPolicy:
       automated:
         prune: true
