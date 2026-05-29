@@ -14,7 +14,7 @@ spec:
           sslCertArn: "{{ .Values.sslCertArn }}"
           clusterName: "{{ .Values.clusterName }}"
           zoneName: "{{ .Values.zoneName }}"
-          imageTag: "{{ .Values.imageTag }}"
+          imageTag: "{{ .Deployment.Revision }}"
   destination:
       server: "https://kubernetes.default.svc"
       namespace: app-b-server
