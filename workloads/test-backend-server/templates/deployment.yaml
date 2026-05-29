@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: backend-server
-        image: yevhenskr/final
+        image: yevhenskr/final:{{ .Values.imageTag }}
         imagePullPolicy: Always
         ports:
         - containerPort: 9900

@@ -10,13 +10,11 @@ spec:
       targetRevision: HEAD
       path: workloads/test-backend-server
       helm:
-        parameters:
-         - name: "gitCommitSha"
-           value: "$ARGOCD_APP_REVISION"
         values: |
           sslCertArn: "{{ .Values.sslCertArn }}"
           clusterName: "{{ .Values.clusterName }}"
           zoneName: "{{ .Values.zoneName }}"
+          imageTag: "{{ .Values.imageTag }}"
   destination:
       server: "https://kubernetes.default.svc"
       namespace: app-b-server
